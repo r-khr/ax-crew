@@ -1,9 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
+import type { AxAgentic, AxFunction, AxSignature } from '@ax-llm/ax';
 import { AxAgent, AxAI } from '@ax-llm/ax';
-import type { AxSignature, AxAgentic, AxFunction } from '@ax-llm/ax';
-import { getAgentConfigParams } from './agentConfig.js';
-import { FunctionRegistryType } from '../functions/index.js'; 
+import { v4 as uuidv4 } from 'uuid';
+import { FunctionRegistryType } from '../functions/index.js';
 import { createState, StateInstance } from '../state/index.js';
+import { getAgentConfigParams } from './agentConfig.js';
 
 // Define the interface for the agent configuration
 interface AgentConfigParams {
@@ -21,10 +21,11 @@ class StatefulAxAgent extends AxAgent<any, any> {
 
   constructor(ai: AxAI, options: Readonly<{ name: string; description: string; signature: string | AxSignature; agents?: AxAgentic[] | undefined; functions?: (AxFunction | (() => AxFunction))[] | undefined; }>, state: StateInstance) {
     const formattedOptions = {
+      ai,
       ...options,
       functions: options.functions?.map(fn => typeof fn === 'function' ? fn() : fn) as AxFunction[] | undefined
     };
-    super(ai, formattedOptions);
+    super(formattedOptions);
     this.state = state;
   }
 }

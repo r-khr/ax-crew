@@ -18,7 +18,7 @@
     "uuid": "^10.0.0"
   },
   "peerDependencies": {
-    "@ax-llm/ax": "^9.0.61"
+    "@ax-llm/ax": "^10.0.6"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
